@@ -34,24 +34,28 @@ function displayChoices() {
   const choicesHTML = pokemonChoices.map(({ name }) => {
     return `<button data-name="${name}">${name}</button>`;
   }).join('');
-  
+  choices.removeAttribute("style","display:none;");
   choices.innerHTML = choicesHTML;
 }
 
 function addAnswerHandler() {
   choices.addEventListener('click', e => {
     const { name } = e.target.dataset;
-    const resultClass = (name === gameData.correct.name) ?
-    'correct' : 'incorrect';
-    
-    
+    let resultClass = (name === gameData.correct.name) ?
+      'correct' : 'incorrect';
+
     e.target.classList.add(resultClass);
+   
     (resultClass === 'correct') ? count++ : count--;
     iPoints.innerText = `Pontuação: ${count}`;
+    choices.setAttribute("style","display:none;");
     revealPokemon();
     speakAnswer();
   });
+  
 }
+choices.addEventListener('click', first);
+
 
 function revealPokemon() {
   main.classList.add('revealed');
